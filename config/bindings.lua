@@ -30,15 +30,15 @@ local keys = {
    { key = 'f',   mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
    {
       key = 'u',
-      mods = mod.SUPER_REV,
+      mods = mod.SUPER,
       action = wezterm.action.QuickSelectArgs({
          label = 'open url',
-         patterns = {
-            '\\((https?://\\S+)\\)',
-            '\\[(https?://\\S+)\\]',
-            '\\{(https?://\\S+)\\}',
-            '<(https?://\\S+)>',
-            '\\bhttps?://\\S+[)/a-zA-Z0-9-]+'
+         patterns = { --PERF: the '⋅' is the icon that neovim uses to visualize spaces. Wezterm enterpretates this as a character instead of the space.
+            '\\((https?://[^⋅\\s]+)\\)',
+            '\\[(https?://[^⋅\\s]+)\\]',
+            '\\{(https?://[^⋅\\s]+)\\}',
+            '<(https?://[^⋅\\s]+)>',
+            '\\bhttps?://[^⋅\\s]+[)/a-zA-Z0-9-]+'
          },
          action = wezterm.action_callback(function(window, pane)
             local url = window:get_selection_text_for_pane(pane)
@@ -184,10 +184,10 @@ local keys = {
    },
 
    -- panes: scroll pane
-   { key = 'u',        mods = mod.SUPER, action = act.ScrollByLine(-5) },
-   { key = 'd',        mods = mod.SUPER, action = act.ScrollByLine(5) },
-   { key = 'PageUp',   mods = 'NONE',    action = act.ScrollByPage(-0.75) },
-   { key = 'PageDown', mods = 'NONE',    action = act.ScrollByPage(0.75) },
+   -- { key = 'u',        mods = mod.SUPER, action = act.ScrollByLine(-5) },
+   -- { key = 'd',        mods = mod.SUPER, action = act.ScrollByLine(5) },
+   { key = 'PageUp',   mods = 'NONE', action = act.ScrollByPage(-0.75) },
+   { key = 'PageDown', mods = 'NONE', action = act.ScrollByPage(0.75) },
 
    -- key-tables --
    -- resizes fonts
