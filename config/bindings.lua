@@ -33,15 +33,29 @@ local keys = {
       mods = mod.SUPER,
       action = wezterm.action.QuickSelectArgs({
          label = 'open url',
-         patterns = { --PERF: the '⋅' is the icon that neovim uses to visualize spaces. Wezterm enterpretates this as a character instead of the space.
+         patterns = {
+            -- Match common URL patterns, excluding '⋅'
             '\\((https?://[^⋅\\s]+)\\)',
             '\\[(https?://[^⋅\\s]+)\\]',
             '\\{(https?://[^⋅\\s]+)\\}',
             '<(https?://[^⋅\\s]+)>',
-            '\\bhttps?://[^⋅\\s]+[)/a-zA-Z0-9-]+'
+            '\\bhttps?://[^⋅\\s]+[)/a-zA-Z0-9-]+',
+            -- NOTE: Match GitHub repository pattern (e.g., mrcjkb/rustaceanvim)
+            '\'([a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+)\'',
          },
          action = wezterm.action_callback(function(window, pane)
-            local url = window:get_selection_text_for_pane(pane)
+            local text = window:get_selection_text_for_pane(pane)
+            --INFO: allows easily accessing git repos for certain neovim users.
+            local user, repo = string.match(text, '([a-zA-Z0-9_.-]+)/([a-zA-Z0-9_.-]+)')
+            local url
+            if user and repo then
+               -- Build the GitHub URL
+               url = string.format('https://github.com/%s/%s', user, repo)
+            else
+               -- Treat it as a regular URL
+               url = text
+            end
+
             wezterm.log_info('opening: ' .. url)
             wezterm.open_with(url)
          end),
