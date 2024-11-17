@@ -40,7 +40,7 @@ local keys = {
             '\\{(https?://[^⋅\\s]+)\\}',
             '<(https?://[^⋅\\s]+)>',
             '\\bhttps?://[^⋅\\s]+[)/a-zA-Z0-9-]+',
-            -- NOTE: Match GitHub repository pattern (e.g., mrcjkb/rustaceanvim)
+            -- NOTE: Match GitHub repository pattern (e.g., 'mrcjkb/rustaceanvim')
             '\'([a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+)\'',
          },
          action = wezterm.action_callback(function(window, pane)
@@ -48,7 +48,7 @@ local keys = {
             --INFO: allows easily accessing git repos for certain neovim users.
             local user, repo = string.match(text, '([a-zA-Z0-9_.-]+)/([a-zA-Z0-9_.-]+)')
             local url
-            if user and repo then
+            if user and repo and not text:find('http') then
                -- Build the GitHub URL
                url = string.format('https://github.com/%s/%s', user, repo)
             else
