@@ -47,14 +47,14 @@ local colorscheme = {
       '#CCCCCC',      -- white
    },
    brights = {
-      '#767676',   -- black
-      mocha.maroon,   -- red
-      mocha.green, -- green
-      '#F9F1A5',   -- yellow
-      '#3B78FF',   -- blue
-      '#B4009E',   -- magenta/purple
-      '#61D6D6',   -- cyan
-      '#F2F2F2',   -- white
+      '#767676',    -- black
+      mocha.maroon, -- red
+      mocha.green,  -- green
+      '#F9F1A5',    -- yellow
+      mocha.blue,   -- blue
+      mocha.teal,   -- magenta/purple
+      '#61D6D6',    -- cyan
+      '#F2F2F2',    -- white
    },
    tab_bar = {
       background = 'rgba(0, 0, 0, 0.4)',
