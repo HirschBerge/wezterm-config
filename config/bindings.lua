@@ -8,12 +8,18 @@ local mod = {}
 if platform.is_mac then
    mod.SUPER = 'SUPER'
    mod.SUPER_REV = 'SUPER|CTRL'
+   -- NOTE: Mac and Linux i use zellij but windows I don't so for the real multiplexering I want to keep the bindings the same, but keep a reasonable binding
+   mod.SUPER_DUPER = "SUPER|SHIFT"
 elseif platform.is_win then
    mod.SUPER = 'ALT' -- to not conflict with Windows key shortcuts
    mod.SUPER_REV = 'ALT|CTRL'
+   -- NOTE: Mac and Linux i use zellij but windows I don't so for the real multiplexering I want to keep the bindings the same, but keep a reasonable binding
+   mod.SUPER_DUPER = mod.SUPER
 elseif platform.is_linux then
    mod.SUPER = 'CTRL' -- to not conflict with zellij
    mod.SUPER_REV = 'ALT|CTRL'
+   -- NOTE: Mac and Linux i use zellij but windows I don't so for the real multiplexering I want to keep the bindings the same, but keep a reasonable binding
+   mod.SUPER_DUPER = "CTRL|SHIFT"
 end
 
 -- stylua: ignore
@@ -66,41 +72,42 @@ local keys = {
    },
 
    -- cursor movement --
-   { key = 'LeftArrow',  mods = mod.SUPER,     action = act.SendString '\x1bOH' },
-   { key = 'RightArrow', mods = mod.SUPER,     action = act.SendString '\x1bOF' },
-   { key = 'Backspace',  mods = mod.SUPER,     action = act.SendString '\x15' },
+   { key = 'LeftArrow',  mods = mod.SUPER,       action = act.SendString '\x1bOH' },
+   { key = 'RightArrow', mods = mod.SUPER,       action = act.SendString '\x1bOF' },
+   { key = 'Backspace',  mods = mod.SUPER,       action = act.SendString '\x15' },
 
    -- copy/paste --
-   { key = 'c',          mods = 'CTRL|SHIFT',  action = act.CopyTo('Clipboard') },
-   { key = 'v',          mods = 'CTRL|SHIFT',  action = act.PasteFrom('Clipboard') },
+   { key = 'c',          mods = 'CTRL|SHIFT',    action = act.CopyTo('Clipboard') },
+   { key = 'v',          mods = 'CTRL|SHIFT',    action = act.PasteFrom('Clipboard') },
 
    -- tabs --
    -- tabs: spawn+close
-   { key = 't',          mods = mod.SUPER,     action = act.SpawnTab('DefaultDomain') },
-   { key = 't',          mods = mod.SUPER_REV, action = act.SpawnTab({ DomainName = 'WSL:Ubuntu' }) },
-   { key = 'w',          mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
+   { key = 't',          mods = mod.SUPER,       action = act.SpawnTab('DefaultDomain') },
+   { key = 't',          mods = mod.SUPER_REV,   action = act.SpawnTab({ DomainName = 'WSL:Ubuntu' }) },
+   { key = 'w',          mods = mod.SUPER_REV,   action = act.CloseCurrentTab({ confirm = false }) },
 
    -- tabs: navigation
-   { key = '[',          mods = mod.SUPER,     action = act.ActivateTabRelative(-1) },
-   { key = ']',          mods = mod.SUPER,     action = act.ActivateTabRelative(1) },
-   { key = '[',          mods = mod.SUPER_REV, action = act.MoveTabRelative(-1) },
-   { key = ']',          mods = mod.SUPER_REV, action = act.MoveTabRelative(1) },
+   { key = '[',          mods = mod.SUPER,       action = act.ActivateTabRelative(-1) },
+   { key = ']',          mods = mod.SUPER,       action = act.ActivateTabRelative(1) },
+   { key = '[',          mods = mod.SUPER_REV,   action = act.MoveTabRelative(-1) },
+   { key = ']',          mods = mod.SUPER_REV,   action = act.MoveTabRelative(1) },
 
-  -- Pane navigation
-   { key = 'h',          mods = 'ALT',         action = wezterm.action.ActivatePaneDirection('Left') },  -- Move pane left
-   { key = 'l',          mods = 'ALT',         action = wezterm.action.ActivatePaneDirection('Right') }, -- Move pane right
-   { key = 'k',          mods = 'ALT',         action = wezterm.action.ActivatePaneDirection('Up') },    -- Move pane up
-   { key = 'j',          mods = 'ALT',         action = wezterm.action.ActivatePaneDirection('Down') },  -- Move pane down
+   -- Pane navigation
+   -- NOTE: Mac and Linux i use zellij but windows I don't so for the real multiplexering I want to keep the bindings the same, but keep a reasonable binding
+   { key = 'h',          mods = mod.SUPER_DUPER, action = wezterm.action.ActivatePaneDirection('Left') },  -- Move pane left
+   { key = 'l',          mods = mod.SUPER_DUPER, action = wezterm.action.ActivatePaneDirection('Right') }, -- Move pane right
+   { key = 'k',          mods = mod.SUPER_DUPER, action = wezterm.action.ActivatePaneDirection('Up') },    -- Move pane up
+   { key = 'j',          mods = mod.SUPER_DUPER, action = wezterm.action.ActivatePaneDirection('Down') },  -- Move pane down
    -- tab: title
-   { key = '0',          mods = mod.SUPER,     action = act.EmitEvent('tabs.manual-update-tab-title') },
-   { key = '0',          mods = mod.SUPER_REV, action = act.EmitEvent('tabs.reset-tab-title') },
+   { key = '0',          mods = mod.SUPER,       action = act.EmitEvent('tabs.manual-update-tab-title') },
+   { key = '0',          mods = mod.SUPER_REV,   action = act.EmitEvent('tabs.reset-tab-title') },
 
    -- tab: hide tab-bar
-   { key = '9',          mods = mod.SUPER,     action = act.EmitEvent('tabs.toggle-tab-bar'), },
+   { key = '9',          mods = mod.SUPER,       action = act.EmitEvent('tabs.toggle-tab-bar'), },
 
    -- window --
    -- window: spawn windows
-   { key = 'n',          mods = mod.SUPER,     action = act.SpawnWindow },
+   { key = 'n',          mods = mod.SUPER,       action = act.SpawnWindow },
 
    -- window: zoom window
    {
