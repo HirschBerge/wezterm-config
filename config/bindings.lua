@@ -8,8 +8,11 @@ local mod = {}
 if platform.is_mac then
    mod.SUPER = 'SUPER'
    mod.SUPER_REV = 'SUPER|CTRL'
-elseif platform.is_win or platform.is_linux then
-   mod.SUPER = 'CTRL' -- to not conflict with Windows key shortcuts
+elseif platform.is_win then
+   mod.SUPER = 'ALT' -- to not conflict with Windows key shortcuts
+   mod.SUPER_REV = 'ALT|CTRL'
+elseif platform.is_linux then
+   mod.SUPER = 'CTRL' -- to not conflict with zellij
    mod.SUPER_REV = 'ALT|CTRL'
 end
 
@@ -25,9 +28,9 @@ local keys = {
       mods = 'NONE',
       action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }),
    },
-   { key = 'F11', mods = 'NONE',    action = act.ToggleFullScreen },
-   { key = 'F12', mods = 'NONE',    action = act.ShowDebugOverlay },
-   { key = 'f',   mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
+   { key = 'F11', mods = 'NONE',       action = act.ToggleFullScreen },
+   { key = 'F12', mods = 'NONE',       action = act.ShowDebugOverlay },
+   { key = 'f',   mods = 'CTRL|SHIFT', action = act.Search({ CaseInSensitiveString = '' }) },
    {
       key = 'u',
       mods = mod.SUPER,
