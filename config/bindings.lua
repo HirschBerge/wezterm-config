@@ -83,6 +83,11 @@ local keys = {
    { key = '[',          mods = mod.SUPER_REV, action = act.MoveTabRelative(-1) },
    { key = ']',          mods = mod.SUPER_REV, action = act.MoveTabRelative(1) },
 
+  -- Pane navigation
+   { key = 'h',          mods = 'ALT',         action = wezterm.action.ActivatePaneDirection('Left') },  -- Move pane left
+   { key = 'l',          mods = 'ALT',         action = wezterm.action.ActivatePaneDirection('Right') }, -- Move pane right
+   { key = 'k',          mods = 'ALT',         action = wezterm.action.ActivatePaneDirection('Up') },    -- Move pane up
+   { key = 'j',          mods = 'ALT',         action = wezterm.action.ActivatePaneDirection('Down') },  -- Move pane down
    -- tab: title
    { key = '0',          mods = mod.SUPER,     action = act.EmitEvent('tabs.manual-update-tab-title') },
    { key = '0',          mods = mod.SUPER_REV, action = act.EmitEvent('tabs.reset-tab-title') },
