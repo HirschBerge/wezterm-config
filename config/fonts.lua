@@ -4,7 +4,14 @@ local platform = require('utils.platform')
 -- local font = 'Maple Mono SC NF'
 local jetbrains = 'JetBrainsMono Nerd Font'
 local font_family  = 'Dank Mono'
-local font_size = platform.is_mac and 12 or 11
+function getPlatformFont()
+    if platform.is_mac or platform.is_win then
+        return 12
+    else
+        return 11
+    end
+end
+local font_size = getPlatformFont()
 
 -- Set JetBrains Mono Bold Italic for bold and italic text
 return {
