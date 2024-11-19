@@ -64,9 +64,12 @@ local keys = {
                -- Treat it as a regular URL
                url = text
             end
-
-            wezterm.log_info('opening: ' .. url)
-            wezterm.open_with(url)
+            if string.match(string.lower(url), "youtube") then
+               os.execute("yt '" .. url .. "'")
+            else
+               wezterm.log_info('Opening: ' .. url)
+               wezterm.open_with(url)
+            end
          end),
       }),
    },
@@ -83,7 +86,7 @@ local keys = {
    -- tabs --
    -- tabs: spawn+close
    { key = 't',          mods = mod.SUPER,       action = act.SpawnTab('DefaultDomain') },
-   { key = 't',          mods = mod.SUPER_REV,   action = act.SpawnTab({ DomainName = 'WSL:Ubuntu' }) },
+   { key = 't',          mods = mod.SUPER_REV,   action = act.SpawnTab({ DomainName = 'docker' }) },
    { key = 'w',          mods = mod.SUPER_REV,   action = act.CloseCurrentTab({ confirm = false }) },
 
    -- tabs: navigation
