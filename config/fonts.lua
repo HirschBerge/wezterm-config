@@ -12,12 +12,21 @@ local function getPlatformFont()
    end
 end
 local font_size = getPlatformFont()
-
+local brands = 'Font Awesome 6 Brands'
+local free = 'Font Awesome 6 Free'
 -- Set JetBrains Mono Bold Italic for bold and italic text
 return {
-   font = wezterm.font({
+   font = wezterm.font_with_fallback({
+    {
       family = font_family,
       weight = 'Medium',
+    },
+    {
+      family = free,
+    },
+    {
+      family = brands,
+    },
    }),
 
    font_rules = {
@@ -25,7 +34,20 @@ return {
       {
          intensity = "Bold",
          italic = false,
-         font = wezterm.font(jetbrains, { weight = 'Bold' }),
+         font = wezterm.font_with_fallback({
+        {
+          family = jetbrains,
+          weight = 'Bold',
+        },
+        {
+          family = brands,
+          weight = 'Bold',
+        },
+        {
+          family = free,
+          weight = 'Bold',
+        }
+      }),
       },
       -- Rule for italic text
       {
