@@ -42,6 +42,7 @@ end
 ---   initial load of the Terminal config.
 function BackDrops:set_files()
    self.files = wezterm.glob(wezterm.config_dir .. '/backdrops/' .. GLOB_PATTERN)
+   -- self.files = wezterm.glob(wezterm.config_dir .. '/backdrops/' .. 'dsr.jpg')
    return self
 end
 
