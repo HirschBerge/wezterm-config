@@ -108,9 +108,26 @@ local keys = {
    -- tab: hide tab-bar
    { key = '9',          mods = mod.SUPER,       action = act.EmitEvent('tabs.toggle-tab-bar'), },
 
-   -- window --
-   -- window: spawn windows
-   { key = 'n',          mods = mod.SUPER,       action = act.SpawnWindow },
+   {
+      key = 'n',
+      mods = mod.SUPER,
+      action = act.SplitPane({
+         direction = 'Down',
+         command = {
+            args = { 'nu' }
+         }
+      })
+   },
+   {
+      key = 'n',
+      mods = mod.SUPER_REV,
+      action = act.SplitPane({
+         direction = 'Right',
+         command = {
+            args = { 'nu' }
+         }
+      })
+   },
 
    -- window: zoom window
    {
