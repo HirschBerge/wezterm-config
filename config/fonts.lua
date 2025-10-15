@@ -3,7 +3,10 @@ local platform    = require('utils.platform')
 
 -- local font = 'Maple Mono SC NF'
 local jetbrains   = 'JetBrainsMono Nerd Font'
-local font_family = 'Dank Mono'
+local font_family = jetbrains
+if platform.is_mac or platform.is_linux then
+   font_family = 'Dank Mono'
+end
 local function getPlatformFont()
    if platform.is_mac or platform.is_win then
       return 12
@@ -17,16 +20,16 @@ local free = 'Font Awesome 6 Free'
 -- Set JetBrains Mono Bold Italic for bold and italic text
 return {
    font = wezterm.font_with_fallback({
-    {
-      family = font_family,
-      weight = 'Medium',
-    },
-    {
-      family = free,
-    },
-    {
-      family = brands,
-    },
+      {
+         family = font_family,
+         weight = 'Medium',
+      },
+      {
+         family = free,
+      },
+      {
+         family = brands,
+      },
    }),
 
    font_rules = {
@@ -35,19 +38,19 @@ return {
          intensity = "Bold",
          italic = false,
          font = wezterm.font_with_fallback({
-        {
-          family = jetbrains,
-          weight = 'Bold',
-        },
-        {
-          family = brands,
-          weight = 'Bold',
-        },
-        {
-          family = free,
-          weight = 'Bold',
-        }
-      }),
+            {
+               family = jetbrains,
+               weight = 'Bold',
+            },
+            {
+               family = brands,
+               weight = 'Bold',
+            },
+            {
+               family = free,
+               weight = 'Bold',
+            }
+         }),
       },
       -- Rule for italic text
       {
