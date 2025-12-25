@@ -65,7 +65,8 @@ local keys = {
                url = text
             end
             if string.match(string.lower(url), "youtube") then
-               os.execute("yt '" .. url .. "'")
+               os.execute("wl-copy '" .. url .. "'")
+               os.execute("zp")
             else
                wezterm.log_info('Opening: ' .. url)
                wezterm.open_with(url)
