@@ -21,8 +21,49 @@ elseif platform.is_linux then
    mod.SUPER_DUPER = 'ALT|SHIFT'
 end
 
+local function is_vim(pane)
+   -- this is set by the plugin, and unset on ExitPre in Neovim
+   return pane:get_user_vars().IS_NVIM == 'true'
+end
+
+local direction_keys = {
+   h = 'Left',
+   j = 'Down',
+   k = 'Up',
+   l = 'Right',
+}
+local function split_nav(resize_or_move, key)
+   return {
+      key = key,
+      mods = resize_or_move == 'resize' and "CTRL|SHIFT" or mod.SUPER,
+      action = wezterm.action_callback(function(win, pane)
+         if is_vim(pane) then
+            -- pass the keys through to vim/nvim
+            win:perform_action({
+               SendKey = { key = key, mods = resize_or_move == 'resize' and "CTRL|SHIFT" or mod.SUPER },
+            }, pane)
+         else
+            if resize_or_move == 'resize' then
+               win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
+            else
+               win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
+            end
+         end
+      end),
+   }
+end
 -- stylua: ignore
 local keys = {
+
+   split_nav('move', 'h'),
+   split_nav('move', 'j'),
+   split_nav('move', 'k'),
+   split_nav('move', 'l'),
+   -- resize panes
+   split_nav('resize', 'h'),
+   split_nav('resize', 'j'),
+   split_nav('resize', 'k'),
+   split_nav('resize', 'l'),
    -- misc/useful --
    { key = 'F1', mods = 'NONE', action = 'ActivateCopyMode' },
    { key = 'F2', mods = 'NONE', action = act.ActivateCommandPalette },
@@ -95,13 +136,6 @@ local keys = {
    { key = '[',          mods = mod.SUPER_REV, action = act.MoveTabRelative(-1) },
    { key = ']',          mods = mod.SUPER_REV, action = act.MoveTabRelative(1) },
 
-   -- Pane navigation
-   -- NOTE: Mac and Linux i use zellij but windows I don't so for the real multiplexering I want to keep the bindings the same, but keep a reasonable binding
-   { key = 'h',          mods = mod.SUPER,     action = wezterm.action.ActivatePaneDirection('Left') },  -- Move pane left
-   { key = 'l',          mods = mod.SUPER,     action = wezterm.action.ActivatePaneDirection('Right') }, -- Move pane right
-   { key = 'k',          mods = mod.SUPER,     action = wezterm.action.ActivatePaneDirection('Up') },    -- Move pane up
-   { key = 'j',          mods = mod.SUPER,     action = wezterm.action.ActivatePaneDirection('Down') },  -- Move pane down
-   -- tab: title
    { key = '0',          mods = mod.SUPER,     action = act.EmitEvent('tabs.manual-update-tab-title') },
    { key = '0',          mods = mod.SUPER_REV, action = act.EmitEvent('tabs.reset-tab-title') },
 
@@ -222,11 +256,6 @@ local keys = {
    { key = 'f',     mods = mod.SUPER, action = act.TogglePaneZoomState },
    { key = 'w',     mods = mod.SUPER, action = act.CloseCurrentPane({ confirm = false }) },
 
-   -- panes: navigation
-   { key = 'k',     mods = mod.SUPER, action = act.ActivatePaneDirection('Up') },
-   { key = 'j',     mods = mod.SUPER, action = act.ActivatePaneDirection('Down') },
-   { key = 'h',     mods = mod.SUPER, action = act.ActivatePaneDirection('Left') },
-   { key = 'l',     mods = mod.SUPER, action = act.ActivatePaneDirection('Right') },
    {
       key = 'p',
       mods = mod.SUPER_REV,
