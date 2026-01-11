@@ -1,7 +1,6 @@
 local wezterm = require 'wezterm'
 local mux = wezterm.mux
 local config = wezterm.config_builder()
-local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
 wezterm.on('gui-startup', function(cmd)
    -- allow `wezterm start -- something` to affect what we spawn
    -- in our initial window
@@ -30,14 +29,6 @@ wezterm.on('gui-startup', function(cmd)
 
    -- We want to startup in the Normal workspace
    mux.set_active_workspace 'Normal'
-   mux.set_active_pane 'Neovim'
 end)
-bar.apply_to_config(config, {
-   zoom = {
-      enabled = false,
-      icon = wezterm.nerdfonts.md_fullscreen,
-      color = 4,
-   },
-})
 
 return config
