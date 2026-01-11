@@ -16,7 +16,7 @@ wezterm.on('gui-startup', function(cmd)
    }
    local term_pane = Neovim:split {
       direction = 'Right',
-      size = 0.4,
+      size = 0.25,
       cwd = wezterm.home_dir,
    }
    local yazi = term_pane:split {
