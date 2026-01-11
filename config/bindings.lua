@@ -112,7 +112,7 @@ local keys = {
       key = 'n',
       mods = mod.SUPER,
       action = act.SplitPane({
-         direction = 'Down',
+         direction = 'Up',
          command = {
             args = { 'nu' }
          }
