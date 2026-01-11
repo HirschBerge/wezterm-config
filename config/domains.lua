@@ -3,16 +3,16 @@ return {
    -- ref: https://wezfurlong.org/wezterm/config/lua/SshDomain.html
    ssh_domains = {
       {
-         name = 'docker',
-         remote_address = '10.10.10.53',
+         name = 'Rasp Pi',
+         remote_address = 'server_nixos',
          multiplexing = 'None',
-         username = 'root',
+         username = username,
          -- When multiplexing == "None", default_prog can be used
          -- to specify the default program to run in new tabs/panes.
          -- Due to the way that ssh works, you cannot specify default_cwd,
          -- but you could instead change your default_prog to put you
          -- in a specific directory.
-         -- default_prog = { 'zsh' },
+         default_prog = { 'nu' },
 
          -- assume that we can use syntax like:
          -- "env -C /some/where $SHELL"
@@ -21,12 +21,34 @@ return {
          -- the current directory on the remote host.
          -- assume_shell = 'Posix',
          ssh_option = {
-            identityfile = '/home/' .. username .. '/.ssh/bind9',
+            identityfile = '/run/secrets/rasp_pi_ssh',
+         },
+      },
+      {
+         name = 'NixOS Server',
+         remote_address = 'server_nixos',
+         multiplexing = 'None',
+         username = username,
+         -- When multiplexing == "None", default_prog can be used
+         -- to specify the default program to run in new tabs/panes.
+         -- Due to the way that ssh works, you cannot specify default_cwd,
+         -- but you could instead change your default_prog to put you
+         -- in a specific directory.
+         default_prog = { 'nu' },
+
+         -- assume that we can use syntax like:
+         -- "env -C /some/where $SHELL"
+         -- using whatever the default command shell is on this
+         -- remote host, so that shell integration will respect
+         -- the current directory on the remote host.
+         -- assume_shell = 'Posix',
+         ssh_option = {
+            identityfile = '/run/secrets/server_ssh',
          },
       },
       {
          name = 'shirohebi',
-         remote_address = 'host-shirohebi.home.hirschykiss.net',
+         remote_address = 'host-shirohebi',
          multiplexing = "WezTerm",
          username = username,
          -- When multiplexing == "None", default_prog can be used
@@ -43,12 +65,12 @@ return {
          -- the current directory on the remote host.
          -- assume_shell = 'Posix',
          ssh_option = {
-            identityfile = '/home/' .. username .. '/.ssh/shirohebi',
+            identityfile = '/run/secrets/laptop_ssh',
          },
       },
       {
          name = 'yoitsu',
-         remote_address = 'host-yoitsu.home.hirschykiss.net',
+         remote_address = 'host-yoitsu',
          multiplexing = "WezTerm",
          username = username,
          -- When multiplexing == "None", default_prog can be used
@@ -65,7 +87,7 @@ return {
          -- the current directory on the remote host.
          -- assume_shell = 'Posix',
          ssh_option = {
-            identityfile = '/home/' .. username .. '/.ssh/yoitsu',
+            identityfile = '/run/secrets/desktop_ssh',
          },
       },
    },
