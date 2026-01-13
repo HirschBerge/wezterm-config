@@ -8,7 +8,7 @@ if platform.is_mac then
    mod.SUPER = 'SUPER'
    mod.SUPER_REV = 'SUPER|CTRL'
    -- NOTE: Mac and Linux i use zellij but windows I don't so for the real multiplexering I want to keep the bindings the same, but keep a reasonable binding
-   mod.SUPER_DUPER = "SUPER|SHIFT"
+   mod.SUPER_DUPER = 'SUPER|SHIFT'
 elseif platform.is_win then
    mod.SUPER = 'ALT' -- to not conflict with Windows key shortcuts
    mod.SUPER_REV = 'ALT|CTRL'
@@ -35,12 +35,15 @@ local direction_keys = {
 local function split_nav(resize_or_move, key)
    return {
       key = key,
-      mods = resize_or_move == 'resize' and "CTRL|SHIFT" or mod.SUPER,
+      mods = resize_or_move == 'resize' and 'CTRL|SHIFT' or mod.SUPER,
       action = wezterm.action_callback(function(win, pane)
          if is_vim(pane) then
             -- pass the keys through to vim/nvim
             win:perform_action({
-               SendKey = { key = key, mods = resize_or_move == 'resize' and "CTRL|SHIFT" or mod.SUPER },
+               SendKey = {
+                  key = key,
+                  mods = resize_or_move == 'resize' and 'CTRL|SHIFT' or mod.SUPER,
+               },
             }, pane)
          else
             if resize_or_move == 'resize' then

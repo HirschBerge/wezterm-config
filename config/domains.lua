@@ -1,4 +1,4 @@
-local username = os.getenv("USER") or os.getenv("USERNAME")
+local username = os.getenv('USER') or os.getenv('USERNAME')
 return {
    -- ref: https://wezfurlong.org/wezterm/config/lua/SshDomain.html
    ssh_domains = {
@@ -49,7 +49,7 @@ return {
       {
          name = 'shirohebi',
          remote_address = 'host-shirohebi',
-         multiplexing = "WezTerm",
+         multiplexing = 'WezTerm',
          username = username,
          -- When multiplexing == "None", default_prog can be used
          -- to specify the default program to run in new tabs/panes.
@@ -71,7 +71,7 @@ return {
       {
          name = 'yoitsu',
          remote_address = 'host-yoitsu',
-         multiplexing = "WezTerm",
+         multiplexing = 'WezTerm',
          username = username,
          -- When multiplexing == "None", default_prog can be used
          -- to specify the default program to run in new tabs/panes.

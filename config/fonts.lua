@@ -1,8 +1,8 @@
-local wezterm     = require('wezterm')
-local platform    = require('utils.platform')
+local wezterm = require('wezterm')
+local platform = require('utils.platform')
 
 -- local font = 'Maple Mono SC NF'
-local jetbrains   = 'JetBrainsMono Nerd Font'
+local jetbrains = 'JetBrainsMono Nerd Font'
 local font_family = jetbrains
 if platform.is_mac or platform.is_linux then
    font_family = 'Dank Mono'
@@ -35,7 +35,7 @@ return {
    font_rules = {
       -- Rule for bold text
       {
-         intensity = "Bold",
+         intensity = 'Bold',
          italic = false,
          font = wezterm.font_with_fallback({
             {
@@ -49,18 +49,18 @@ return {
             {
                family = free,
                weight = 'Bold',
-            }
+            },
          }),
       },
       -- Rule for italic text
       {
-         intensity = "Normal",
+         intensity = 'Normal',
          italic = true,
          font = wezterm.font(font_family, { italic = true }),
       },
       -- Rule for bold italic text
       {
-         intensity = "Bold",
+         intensity = 'Bold',
          italic = true,
          font = wezterm.font(jetbrains, { weight = 'Bold', italic = true }),
       },
