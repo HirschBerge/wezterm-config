@@ -1,7 +1,7 @@
 local platform = require('utils.platform')
 
 local options = {
-   default_prog = {},
+   default_prog = { 'fish' },
    launch_menu = {},
 }
 
@@ -27,7 +27,7 @@ elseif platform.is_mac then
       { label = 'Zsh',     args = { 'zsh', '-l' } },
    }
 elseif platform.is_linux then
-   options.default_prog = { 'fish', '-l' } --NOTE: I actually use nushell primarily, but zsh has zellij auto-start enabled
+   options.default_prog = { 'fish', '-l' }
    options.launch_menu = {
       { label = 'Nu',   args = { 'nu', '-l' } },
       { label = 'Fish', args = { 'fish', '-l' } },
