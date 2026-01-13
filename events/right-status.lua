@@ -48,11 +48,11 @@ local colors = {
 local cells = Cells:new()
 
 cells
-    :add_segment('date_icon', ICON_DATE .. '  ', colors.date, attr(attr.intensity('Bold')))
-    :add_segment('date_text', '', colors.date, attr(attr.intensity('Bold')))
-    :add_segment('separator', ' ' .. ICON_SEPARATOR .. '  ', colors.separator)
-    :add_segment('battery_icon', '', colors.battery)
-    :add_segment('battery_text', '', colors.battery, attr(attr.intensity('Bold')))
+   :add_segment('date_icon', ICON_DATE .. '  ', colors.date, attr(attr.intensity('Bold')))
+   :add_segment('date_text', '', colors.date, attr(attr.intensity('Bold')))
+   :add_segment('separator', ' ' .. ICON_SEPARATOR .. '  ', colors.separator)
+   :add_segment('battery_icon', '', colors.battery)
+   :add_segment('battery_text', '', colors.battery, attr(attr.intensity('Bold')))
 
 ---@return string, string
 local function battery_info()
