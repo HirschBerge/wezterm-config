@@ -2,6 +2,8 @@ local gpu_adapters = require('utils.gpu_adapter')
 local backdrops = require('utils.backdrops')
 local colors = require('colors.custom')
 
+local platform = require('utils.platform')
+
 local wezterm = require('wezterm')
 local config = {
    max_fps = 120,
@@ -59,8 +61,6 @@ local function enable_tab_plugin(which, tabline_conf)
       })
 
       tabline.apply_to_config(tabline_conf)
-      -- NOTE: Override a crappy deault
-      tabline_conf.window_decorations = "NONE"
    elseif which == "bar" then
       -- ── Bar plugin (simpler, bottom‑bar style) ───────────────────────
       local bar = wezterm.plugin.require(
@@ -91,6 +91,12 @@ local function enable_tab_plugin(which, tabline_conf)
    return tabline_conf
 end
 
+if platform.is_mac or platform.is_win then
+      config.window_decorations = "RESIZE"
+else 
+      -- NOTE: Override a crappy deault
+      config.window_decorations = "NONE"
+end
 -- HACK: Easy switch bars. Options: "tabline", "bar"
 config = enable_tab_plugin("tabline", config)
 return config
