@@ -13,7 +13,7 @@ elseif platform.is_win then
    mod.SUPER = 'ALT' -- to not conflict with Windows key shortcuts
    mod.SUPER_REV = 'ALT|CTRL'
    -- NOTE: Mac and Linux i use zellij but windows I don't so for the real multiplexering I want to keep the bindings the same, but keep a reasonable binding
-   mod.SUPER_DUPER = mod.SUPER
+   mod.SUPER_DUPER = 'CTRL|SHIFT'
 elseif platform.is_linux then
    mod.SUPER = 'ALT' -- to not conflict with zellij
    mod.SUPER_REV = 'ALT|CTRL'

@@ -14,9 +14,20 @@ local function getPlatformFont()
       return 11
    end
 end
+
+local function getPlatformAwesome()
+   if platform.is_mac or platform.is_linux then
+      local brands = 'Font Awesome 6 Brands'
+      local free = 'Font Awesome 6 Free'
+      return brands, free
+   else
+      local brands = 'Font Awesome 7 Brands'
+      local free = 'Font Awesome 7 Free'
+      return brands, free
+   end
+end
 local font_size = getPlatformFont()
-local brands = 'Font Awesome 6 Brands'
-local free = 'Font Awesome 6 Free'
+local brands, free = getPlatformAwesome()
 -- Set JetBrains Mono Bold Italic for bold and italic text
 return {
    font = wezterm.font_with_fallback({
@@ -44,11 +55,11 @@ return {
             },
             {
                family = brands,
-               weight = 'Bold',
+               weight = 'Regular',
             },
             {
                family = free,
-               weight = 'Bold',
+               weight = 'Regular',
             },
          }),
       },

@@ -89,7 +89,6 @@ end
 -- HACK: Easy switch bars. Options: "tabline", "bar"
 config = enable_tab_plugin('tabline', config)
 
-
 if platform.is_mac or platform.is_win then
    config.window_decorations = 'RESIZE'
 else
