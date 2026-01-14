@@ -35,13 +35,6 @@ local config = {
    },
 }
 
-if platform.is_mac or platform.is_win then
-   config.window_decorations = 'RESIZE'
-else
-   -- NOTE: Override a crappy deault
-   config.window_decorations = 'NONE'
-end
-
 local function enable_tab_plugin(which, tabline_conf)
    if which == 'tabline' then
       -- ── Tabline plugin (highly customizable) ───────────────────────
@@ -95,4 +88,12 @@ end
 
 -- HACK: Easy switch bars. Options: "tabline", "bar"
 config = enable_tab_plugin('tabline', config)
+
+
+if platform.is_mac or platform.is_win then
+   config.window_decorations = 'RESIZE'
+else
+   -- NOTE: Override a crappy deault
+   config.window_decorations = 'NONE'
+end
 return config
