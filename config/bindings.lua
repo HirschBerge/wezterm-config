@@ -255,9 +255,9 @@ local keys = {
    },
 
    -- panes: zoom+close pane
-   { key = 'Enter', mods = mod.SUPER, action = act.TogglePaneZoomState },
-   { key = 'f',     mods = mod.SUPER, action = act.TogglePaneZoomState },
-   { key = 'w',     mods = mod.SUPER, action = act.CloseCurrentPane({ confirm = false }) },
+   -- { key = 'Enter', mods = mod.SUPER, action = act.TogglePaneZoomState },
+   { key = 'f', mods = mod.SUPER, action = act.TogglePaneZoomState },
+   { key = 'w', mods = mod.SUPER, action = act.CloseCurrentPane({ confirm = false }) },
 
    {
       key = 'p',
