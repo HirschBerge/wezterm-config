@@ -5,52 +5,52 @@ local act = wezterm.action
 local mod = {}
 
 if platform.is_mac then
-    mod.SUPER = 'ALT'
-    mod.SUPER_REV = 'SUPER|CTRL'
-    mod.SUPER_DUPER = 'SUPER|SHIFT'
+   mod.SUPER = 'ALT'
+   mod.SUPER_REV = 'SUPER|CTRL'
+   mod.SUPER_DUPER = 'SUPER|SHIFT'
 elseif platform.is_win then
-    mod.SUPER = 'ALT' -- to not conflict with Windows key shortcuts
-    mod.SUPER_REV = 'ALT|CTRL'
-    mod.SUPER_DUPER = 'CTRL|SHIFT'
+   mod.SUPER = 'ALT' -- to not conflict with Windows key shortcuts
+   mod.SUPER_REV = 'ALT|CTRL'
+   mod.SUPER_DUPER = 'CTRL|SHIFT'
 elseif platform.is_linux then
-    mod.SUPER = 'ALT' -- to not conflict with zellij
-    mod.SUPER_REV = 'ALT|CTRL'
-    mod.SUPER_DUPER = 'ALT|SHIFT'
+   mod.SUPER = 'ALT' -- to not conflict with zellij
+   mod.SUPER_REV = 'ALT|CTRL'
+   mod.SUPER_DUPER = 'ALT|SHIFT'
 end
 
 local function is_vim(pane)
-    -- this is set by the plugin, and unset on ExitPre in Neovim
-    return pane:get_user_vars().IS_NVIM == 'true'
+   -- this is set by the plugin, and unset on ExitPre in Neovim
+   return pane:get_user_vars().IS_NVIM == 'true'
 end
 
 local direction_keys = {
-    h = 'Left',
-    j = 'Down',
-    k = 'Up',
-    l = 'Right',
+   h = 'Left',
+   j = 'Down',
+   k = 'Up',
+   l = 'Right',
 }
 local function split_nav(resize_or_move, key)
-    return {
-        key = key,
-        mods = resize_or_move == 'resize' and 'CTRL|SHIFT' or mod.SUPER,
-        action = wezterm.action_callback(function(win, pane)
-            if is_vim(pane) then
-                -- pass the keys through to vim/nvim
-                win:perform_action({
-                    SendKey = {
-                        key = key,
-                        mods = resize_or_move == 'resize' and 'CTRL|SHIFT' or mod.SUPER,
-                    },
-                }, pane)
+   return {
+      key = key,
+      mods = resize_or_move == 'resize' and 'CTRL|SHIFT' or mod.SUPER,
+      action = wezterm.action_callback(function(win, pane)
+         if is_vim(pane) then
+            -- pass the keys through to vim/nvim
+            win:perform_action({
+               SendKey = {
+                  key = key,
+                  mods = resize_or_move == 'resize' and 'CTRL|SHIFT' or mod.SUPER,
+               },
+            }, pane)
+         else
+            if resize_or_move == 'resize' then
+               win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
             else
-                if resize_or_move == 'resize' then
-                    win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
-                else
-                    win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
-                end
+               win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
             end
-        end),
-    }
+         end
+      end),
+   }
 end
 -- stylua: ignore
 local keys = {
@@ -311,19 +311,19 @@ local key_tables = {
 }
 
 local mouse_bindings = {
-    -- Ctrl-click will open the link under the mouse cursor
-    {
-        event = { Up = { streak = 1, button = 'Left' } },
-        mods = 'CTRL',
-        action = act.OpenLinkAtMouseCursor,
-    },
+   -- Ctrl-click will open the link under the mouse cursor
+   {
+      event = { Up = { streak = 1, button = 'Left' } },
+      mods = 'CTRL',
+      action = act.OpenLinkAtMouseCursor,
+   },
 }
 
 return {
-    disable_default_key_bindings = true,
-    -- disable_default_mouse_bindings = true,
-    leader = { key = 'Space', mods = mod.SUPER_REV },
-    keys = keys,
-    key_tables = key_tables,
-    mouse_bindings = mouse_bindings,
+   disable_default_key_bindings = true,
+   -- disable_default_mouse_bindings = true,
+   leader = { key = 'Space', mods = mod.SUPER_REV },
+   keys = keys,
+   key_tables = key_tables,
+   mouse_bindings = mouse_bindings,
 }
