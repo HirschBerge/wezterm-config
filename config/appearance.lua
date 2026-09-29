@@ -59,6 +59,20 @@ local function enable_tab_plugin(which, tabline_conf)
       })
 
       tabline.apply_to_config(tabline_conf)
+   elseif which == 'widgets' then
+      -- ── Bar plugin (simpler, bottom‑bar style) ───────────────────────
+      local sys = wezterm.plugin.require('https://github.com/usrivastava92/widgets.wez')
+
+      sys.apply_to_config(config, {
+         right = {
+            sys.battery.charge.widget(),
+            sys.cpu.utilization.widget(),
+            sys.ram.utilization.widget(),
+            sys.network.download.widget(),
+            sys.network.upload.widget(),
+         },
+         separator = { text = '|', color = '#3b4261' },
+      })
    elseif which == 'bar' then
       -- ── Bar plugin (simpler, bottom‑bar style) ───────────────────────
       local bar = wezterm.plugin.require('https://github.com/adriankarlen/bar.wezterm')
@@ -86,7 +100,7 @@ local function enable_tab_plugin(which, tabline_conf)
    return tabline_conf
 end
 
--- HACK: Easy switch bars. Options: "tabline", "bar"
+-- HACK: Easy switch bars. Options: "tabline", "bar", "widgets"
 config = enable_tab_plugin('tabline', config)
 
 if platform.is_mac then
